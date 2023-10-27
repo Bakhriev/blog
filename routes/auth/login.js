@@ -1,4 +1,4 @@
-import UserModel from "../../models/User.js"
+import UserModel from "../../models/user.js"
 import { compare } from "bcrypt"
 import Jwt from "jsonwebtoken"
 
@@ -19,7 +19,7 @@ export const handleLogin = async (req, res) => {
 			return res.status(404).json("Неверный логин или пароль")
 		}
 
-		const token = Jwt.sign({ _id: user._id }, "secret", { expiresIn: "30d" })
+		const token = Jwt.sign({ _id: user._id }, "ldldld", { expiresIn: "30d" })
 		const { passwordHash, ...userData } = user._doc
 
 		return res.status(200).json({

@@ -2,7 +2,7 @@ import { validationResult } from "express-validator"
 import { genSalt, hash } from "bcrypt"
 import Jwt from "jsonwebtoken"
 
-import UserModel from "../../models/User.js"
+import UserModel from "../../models/user.js"
 
 export const handleRegister = async (req, res) => {
 	try {
@@ -26,8 +26,8 @@ export const handleRegister = async (req, res) => {
 
 		const user = await UserModel.create(newUser)
 
-		const token = Jwt.sign({ _id: user._id }, "secret", { expiresIn: "30d" })
-		
+		const token = Jwt.sign({ _id: user._id }, "ldldld", { expiresIn: "30d" })
+
 		const { fullName, email, _id } = user._doc
 
 		return res.status(200).json({

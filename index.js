@@ -2,10 +2,19 @@ import express from "express"
 import mongoose from "mongoose"
 import dotenv from "dotenv"
 
-import { registerValidation } from "./validations/auth.js"
+import {
+	registerValidate,
+	loginValidate,
+	postCreateValidate,
+	postUpdateValidate
+} from "./validations/validations.js"
 
 import { handleLogin } from "./routes/auth/login.js"
 import { handleRegister } from "./routes/auth/register.js"
+import { checkAuth } from "./utils/checkAuth.js"
+import { getMe } from "./routes/auth/me.js"
+
+import * as PostController from "./controllers/PostController.js"
 
 dotenv.config()
 
@@ -24,9 +33,19 @@ app.get("/", (req, res) => {
 	res.send("h1")
 })
 
-app.post("/auth/login", handleLogin)
+app.get("/auth/me", checkAuth, getMe)
 
-app.post("/auth/register", registerValidation, handleRegister)
+//
+app.get("/posts/:id", PostController.getOne)
+app.get("/posts", PostController.getAll)
+
+app.post("/auth/login", loginValidate, handleLogin)
+app.post("/auth/register", registerValidate, handleRegister)
+
+app.post("/posts", checkAuth, postCreateValidate, PostController.create)
+app.delete("/posts/:id", checkAuth, PostController.remove)
+app.patch("/posts/:id", checkAuth, postUpdateValidate, PostController.update)
+//
 
 app.listen(process.env.PORT || 4444, () => {
 	console.log(`Сервер успешно запущен на port: ${process.env.PORT || 4444}`)
