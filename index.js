@@ -31,5 +31,7 @@ app.post("/auth/register", registerValidation, handleRegister)
 // Поднятие сервера ----------------------------------------------------------------
 
 app.listen(process.env.PORT || 4444, () => {
-	console.log(`Сервер успешно запущен на port: ${process.env.PORT || 3000}`)
+	console.log(`Сервер успешно запущен на port: ${process.env.PORT || 4444}`)
 })
+
+export default app
